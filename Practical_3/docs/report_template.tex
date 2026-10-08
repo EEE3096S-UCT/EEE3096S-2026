@@ -1,0 +1,115 @@
+% EEE3096S Practical 3: replace every blank with your own measured results.
+% Place full12.png and coarse6.png alongside this file, or in docs/ when
+% compiling from the practical root. Missing images produce safe placeholders.
+% Compile from this directory: tectonic report_template.tex
+% Keep this report to the measurements, two captures, and one page of explanation.
+\documentclass[11pt,a4paper]{article}
+\usepackage{lmodern}
+\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\renewcommand{\arraystretch}{1.4}
+\newcommand{\blank}[1][27mm]{\rule{#1}{0.4pt}}
+\newcommand{\captureplaceholder}[2]{%
+  \fbox{\parbox[c][0.26\textheight][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+    \centering #2\par\medskip
+    Replace with your own oscilloscope capture.\par
+    Save it as \texttt{\detokenize{#1}}.}}}
+\newcommand{\capture}[2]{%
+  \IfFileExists{#1}{%
+    \includegraphics[width=\linewidth,height=0.26\textheight,keepaspectratio]{#1}}{%
+    \IfFileExists{docs/#1}{%
+      \includegraphics[width=\linewidth,height=0.26\textheight,keepaspectratio]{docs/#1}}{%
+      \captureplaceholder{#1}{#2}}}}
+
+\begin{document}
+\begin{center}
+  {\Large\bfseries EEE3096S Practical 3 --- Voltage Mirror}\par
+  Student report template
+\end{center}
+Names/student numbers: \blank[105mm]\par
+Date: \blank[35mm]\qquad Build configuration: \blank[45mm]
+
+\textbf{Assessment: live demonstration 80 marks; report 20 marks.}
+Enter your own measurements. Suggested input levels are setup targets, not results.
+Submit the four completed functions with this report.
+
+\section*{1. Measurements and predictions (8 report marks)}
+Measured analogue reference $V_R$: \blank\ V\par
+DMM range/resolution: \blank[75mm]\par
+Nominal ADC/DAC interval $V_R/4096$: \blank\ mV\par
+Predicted coarse output step $V_R/64$: \blank\ mV
+
+Measure PA5 and PA4 independently with the DMM. Record the actual LCD codes.
+Calculate the nominal DAC output $D V_R/4096$ from each recorded command.
+
+{\small
+\begin{tabularx}{\linewidth}{@{}l l X r r X X@{}}
+\toprule
+Input target & Mode & Measured PA5 (V) & $C$ & $D$ & Predicted PA4 (V) & Measured PA4 (V) \\
+\midrule
+$\sim$0.800 V & FULL12  & & & & & \\
+$\sim$0.800 V & COARSE6 & & & & & \\
+$\sim$1.650 V & FULL12  & & & & & \\
+$\sim$1.650 V & COARSE6 & & & & & \\
+$\sim$2.500 V & FULL12  & & & & & \\
+$\sim$2.500 V & COARSE6 & & & & & \\
+\bottomrule
+\end{tabularx}}
+
+Generator: \blank[18mm]\ Hz; \blank[18mm]\ Vpp; \blank[18mm]\ V offset\par
+Verified PA5 minimum/maximum: \blank\ / \blank\ V\par
+Measured adjacent coarse step: \blank\ mV\par
+Measured minus predicted step: \blank\ mV\par
+Percentage difference $100(\Delta V_{\rm measured}-\Delta V_{\rm predicted})/
+\Delta V_{\rm predicted}$: \blank[18mm]\ \%
+
+\newpage
+\section*{2. Two real scope captures (6 report marks)}
+Label PA5 input and PA4 output, modes, voltage scales and time scales.
+Use your own captures; simulated illustrations are not experimental evidence.
+
+\begin{center}
+\capture{full12.png}{FULL12: input and output over approximately one triangle cycle}
+\end{center}
+\textbf{Capture 1 --- FULL12.} Show both traces over approximately one cycle.
+The small individual 12-bit steps need not be resolved.
+
+\begin{center}
+\capture{coarse6.png}{COARSE6: adjacent settled plateaus and voltage cursors}
+\end{center}
+\textbf{Capture 2 --- COARSE6.} Show both channels, adjacent settled output
+plateaus and the cursor measurement used for your step comparison.
+
+\newpage
+\section*{3. Explanation (6 report marks; at most one page)}
+Replace the prompts and blank spaces with concise answers supported by your
+measurements. Keep the whole written explanation on this page.
+
+\textbf{Mapping.} State your FULL12 and COARSE6 relationships. How many distinct
+coarse commands exist, what is their spacing, and why is the maximum 4032?
+\vspace{18mm}
+
+\textbf{Measured steps.} Compare the measured coarse step with $V_R/64$.
+Use your readings and instrument limits to discuss any difference.
+\vspace{18mm}
+
+\textbf{Resolution and accuracy.} Explain why a smooth FULL12 trace does not
+establish continuous voltage resolution, and why 12-bit resolution does not
+guarantee voltage accuracy. Both hardware converters stay at 12 bits.
+\vspace{18mm}
+
+\textbf{One DC result.} Compare $C V_R/4096$ with measured input, and
+$D V_R/4096$ with measured output. Explain why copying the code does not
+guarantee identical physical voltages.
+\vspace{18mm}
+
+\textit{Live demonstration: prepare all three DC levels; show one safe
+tutor-selected input and both triangle modes. Explain the actual codes,
+$V_R/64$ step prediction, ADC/DAC register fields, bounded wait and W1C flags.}
+\end{document}

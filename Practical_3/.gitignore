@@ -1,0 +1,22 @@
+# Tutor-only code, notes, examples, binaries and hardware backups.
+/Practical3_Sol/
+/Practical3_Sol.zip
+
+# Generated firmware and local development state.
+/starter/build/
+/starter/Debug/
+/starter/Release/
+/.agents/
+/.aws/
+/.codex/
+__pycache__/
+*.pyc
+.DS_Store
+
+# LaTeX working files; keep the handout/report template PDFs in Git.
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
